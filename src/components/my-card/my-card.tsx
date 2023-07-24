@@ -1,4 +1,4 @@
-import { Component, h, Prop, State } from '@stencil/core';
+import { Component, h, Prop, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'my-card',
@@ -18,6 +18,10 @@ export class MyCard {
     this.showCard = false;
   }
 
+  @Watch('userName')
+  watchHandler(newValue: boolean, oldValue: boolean) {
+    console.log('The new value of name is: ' + newValue + ', old value: ' + oldValue);
+  }
   componentWillUpdate() {
     console.log('componentWillUpdate...!');
   }
