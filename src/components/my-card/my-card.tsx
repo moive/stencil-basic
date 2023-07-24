@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'my-card',
@@ -9,8 +9,17 @@ export class MyCard {
   // mutable true, fixes resolve change props
   @Prop({ mutable: true }) userName: string;
 
+  @State() APIData: string;
+  @State() showCard: boolean = true;
+
   changeState() {
     this.userName = 'name has been updated';
+    this.APIData = 'we have data from api';
+    this.showCard = false;
+  }
+
+  componentWillUpdate() {
+    console.log('componentWillUpdate...!');
   }
 
   render() {
@@ -25,6 +34,10 @@ export class MyCard {
         </div>
       </div>
     );
+
+    let contentToDisplay = '';
+    if (this.showCard) contentToDisplay = reactContent;
+
     let stencilContent = (
       <div>
         <div class="card-custom" id="stencil-div">
@@ -37,9 +50,10 @@ export class MyCard {
     let mainContent = (
       <div class="my-card-wrapper">
         {this.userName ? <h1>Hi, I am {this.userName} </h1> : ''}
+        <h5>{this.APIData}</h5>
         <button class="btn-stencil">Stencil</button>
         <button class="btn-react">React</button>
-        {reactContent}
+        {contentToDisplay}
         {stencilContent}
       </div>
     );
