@@ -81,6 +81,10 @@ export class MyCard {
     }
   }
 
+  onUserInput(event: Event) {
+    this.userName = (event.target as HTMLInputElement).value;
+  }
+
   render() {
     let reactContent = (
       <div>
@@ -122,6 +126,9 @@ export class MyCard {
           React
         </button>
         {contentToDisplay}
+        <h></h>
+        <h3>Two way data binding in stencil</h3>
+        <input type="text" class="my-input-textbox" onInput={this.onUserInput.bind(this)} value={this.userName} />
       </div>
     );
     return mainContent;
