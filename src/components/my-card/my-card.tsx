@@ -9,7 +9,7 @@ export class MyCard {
   // mutable true, fixes resolve change props
   @Prop({ mutable: true }) userName: string;
 
-  @State() APIData: string;
+  @State() APIData: string = 'starting value';
   // @State() showCard: boolean = true;
   @State() showReactTab: boolean = false;
   @State() showStencilTab: boolean = false;
@@ -24,8 +24,48 @@ export class MyCard {
   watchHandler(newValue: boolean, oldValue: boolean) {
     console.log('The new value of name is: ' + newValue + ', old value: ' + oldValue);
   }
+  // componentWillUpdate() {
+  //   console.log('componentWillUpdate...!');
+  // }
+
+  connectedCallback() {
+    console.log('connectedCallback');
+  }
+
+  disconnectedCallback() {
+    console.log('disconnectedCallback');
+  }
+
+  componentWillLoad() {
+    // this method is only called once it's a good place to load data asynchronously
+    console.log('componentWillLoad component is about to load');
+  }
+
+  componentWillRender() {
+    // It's always recommended to make any rendered state updates
+    // within componentWiilRender()
+    console.log('componentWillRender');
+  }
+
+  componentDidLoad() {
+    // Called once just after the component fully loaded
+    // and the first render() occurs.
+    console.log('componentDidLoad');
+    // this.APIData = 'API has been updated';
+  }
+
+  componentShouldUpdate() {
+    // This hook is called when the component's Prop or State
+    // property changes and a rerender is about to be requested.
+    return true;
+  }
+
   componentWillUpdate() {
-    console.log('componentWillUpdate...!');
+    console.log('componentWillUpdate - is called since we are updating this.myAPIData in componentDidLoad');
+  }
+
+  componentDidUpdate() {
+    console.log('componentDidUpdate - is called since we are updating this.myAPIData in componentDidLoad');
   }
 
   onContentChange(content: string) {

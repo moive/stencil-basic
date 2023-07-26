@@ -23,6 +23,21 @@ export namespace Components {
          */
         "middle": string;
     }
+    interface StencilFormUser {
+        "isEdit": boolean;
+        "item": {};
+    }
+    interface StencilTable {
+        "items": any[];
+    }
+}
+export interface StencilFormUserCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLStencilFormUserElement;
+}
+export interface StencilTableCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLStencilTableElement;
 }
 declare global {
     interface HTMLMyCardElement extends Components.MyCard, HTMLStencilElement {
@@ -37,9 +52,23 @@ declare global {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLStencilFormUserElement extends Components.StencilFormUser, HTMLStencilElement {
+    }
+    var HTMLStencilFormUserElement: {
+        prototype: HTMLStencilFormUserElement;
+        new (): HTMLStencilFormUserElement;
+    };
+    interface HTMLStencilTableElement extends Components.StencilTable, HTMLStencilElement {
+    }
+    var HTMLStencilTableElement: {
+        prototype: HTMLStencilTableElement;
+        new (): HTMLStencilTableElement;
+    };
     interface HTMLElementTagNameMap {
         "my-card": HTMLMyCardElement;
         "my-component": HTMLMyComponentElement;
+        "stencil-form-user": HTMLStencilFormUserElement;
+        "stencil-table": HTMLStencilTableElement;
     }
 }
 declare namespace LocalJSX {
@@ -60,9 +89,20 @@ declare namespace LocalJSX {
          */
         "middle"?: string;
     }
+    interface StencilFormUser {
+        "isEdit"?: boolean;
+        "item"?: {};
+        "onItemUser"?: (event: StencilFormUserCustomEvent<any>) => void;
+    }
+    interface StencilTable {
+        "items"?: any[];
+        "onItemUser"?: (event: StencilTableCustomEvent<any>) => void;
+    }
     interface IntrinsicElements {
         "my-card": MyCard;
         "my-component": MyComponent;
+        "stencil-form-user": StencilFormUser;
+        "stencil-table": StencilTable;
     }
 }
 export { LocalJSX as JSX };
@@ -71,6 +111,8 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "my-card": LocalJSX.MyCard & JSXBase.HTMLAttributes<HTMLMyCardElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "stencil-form-user": LocalJSX.StencilFormUser & JSXBase.HTMLAttributes<HTMLStencilFormUserElement>;
+            "stencil-table": LocalJSX.StencilTable & JSXBase.HTMLAttributes<HTMLStencilTableElement>;
         }
     }
 }
