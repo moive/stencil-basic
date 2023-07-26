@@ -15,6 +15,10 @@ export class MyCard {
   @State() showReactTab: boolean = false;
   @State() showStencilTab: boolean = false;
 
+  @State() myStencilUsers: string;
+  @State() myReactUsers: string;
+  @State() urlApi: string = 'https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&apikey=demo';
+
   changeState() {
     this.userName = 'name has been updated';
     this.APIData = 'we have data from api';
@@ -38,8 +42,17 @@ export class MyCard {
   }
 
   componentWillLoad() {
-    // this method is only called once it's a good place to load data asynchronously
+    // this method is only called once it's a good place to load data asynchronously.
     console.log('componentWillLoad component is about to load');
+    this.APIData = 'loading...';
+
+    fetch(this.urlApi)
+      .then(res => res.json())
+      .then(data => {
+        let metaData = data['Meta Data'];
+        let timeDateStencil = metaData['1. Information'];
+        this.APIData = timeDateStencil;
+      });
   }
 
   componentWillRender() {
@@ -69,6 +82,61 @@ export class MyCard {
     console.log('componentDidUpdate - is called since we are updating this.myAPIData in componentDidLoad');
   }
 
+  getDateNow() {
+    //getUTCFullYear(), getUTCMonth(), getUTCDay().
+    const dateNow = new Date();
+    const year = dateNow.getUTCFullYear();
+    let month: string | number = dateNow.getUTCMonth() + 1;
+    let day: string | number = dateNow.getUTCDate();
+    const hours = dateNow.getHours();
+    const minutes = dateNow.getMinutes();
+    const second = dateNow.getSeconds();
+
+    if (day < 10) {
+      day = '0' + day;
+    }
+
+    if (month < 10) {
+      month = `0${month}`;
+    }
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${second}`;
+  }
+
+  getStencilUserFromAPI() {
+    this.myStencilUsers = 'loading data...';
+    fetch(this.urlApi)
+      .then(res => res.json())
+      .then(data => {
+        const timeSeries = data['Time Series (5min)'];
+        const timeDateStencil = timeSeries['2023-07-25 17:00:00'];
+        this.myStencilUsers = timeDateStencil['5. volume'];
+      })
+      .catch(ex => console.log(ex));
+  }
+
+  getReactUserFromAPI() {
+    this.myReactUsers = 'loading data...';
+    fetch(this.urlApi)
+      .then(res => res.json())
+      .then(data => {
+        console.log(this.getDateNow());
+        const timeSeries = data['Time Series (5min)'];
+        const timeDateReact = timeSeries['2023-07-25 17:00:00'];
+        console.log(timeSeries);
+        this.myReactUsers = timeDateReact['5. volume'];
+      })
+      .catch(ex => console.log(ex));
+  }
+
+  fetchDataFromAPI(contentType: string) {
+    if (contentType == 'stencil') {
+      this.getStencilUserFromAPI();
+    } else {
+      this.getReactUserFromAPI();
+    }
+  }
+
   onContentChange(content: string) {
     if (content == 'reacttab') {
       this.showReactTab = true;
@@ -91,8 +159,8 @@ export class MyCard {
       <div>
         <div class="card-custom" id="react-div">
           Hello, from React <br></br>
-          Live Users
-          <button class="btn-react small-btn" onClick={this.changeState.bind(this)}>
+          Live Users <span>{this.myReactUsers}</span>
+          <button class="btn-react small-btn" onClick={this.fetchDataFromAPI.bind(this, 'react')}>
             Get React Users
           </button>
         </div>
@@ -104,8 +172,12 @@ export class MyCard {
         <div class="card-custom" id="stencil-div">
           Hello, from stencil
         </div>
-        <div>Live Users</div>
-        <button class="btn-stencil small-btn">Get Stencil Users</button>
+        <div>
+          Live Users <span>{this.myStencilUsers}</span>
+        </div>
+        <button class="btn-stencil small-btn" onClick={this.fetchDataFromAPI.bind(this, 'stencil')}>
+          Get Stencil Users
+        </button>
       </div>
     );
 
