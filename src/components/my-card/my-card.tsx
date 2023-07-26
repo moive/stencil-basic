@@ -4,6 +4,7 @@ import { Component, h, Prop, State, Watch } from '@stencil/core';
   tag: 'my-card',
   styleUrl: 'my-card.scss',
   shadow: true,
+  // scoped: true,
 })
 export class MyCard {
   // mutable true, fixes resolve change props

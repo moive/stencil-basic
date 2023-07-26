@@ -7,8 +7,14 @@
 
     <script type="module" src="/build/stencil-basic.esm.js"></script>
     <script nomodule src="/build/stencil-basic.js"></script>
+    <style>
+      .my-input-textbox {
+        border: 1px solid tomato;
+      }
+    </style>
   </head>
   <body>
+    <h3 class="my-input-textbox">Thsi is outside of component</h3>
     <my-card user-name="Moisés"></my-card>
     <!-- <my-component first="Stencil" last="'Don't call me a framework' JS"></my-component> -->
   </body>
