@@ -23,6 +23,9 @@ export namespace Components {
          */
         "middle": string;
     }
+    interface SearchWorld {
+        "searchText": string;
+    }
     interface StencilFormUser {
         "isEdit": boolean;
         "item": {};
@@ -52,6 +55,12 @@ declare global {
         prototype: HTMLMyComponentElement;
         new (): HTMLMyComponentElement;
     };
+    interface HTMLSearchWorldElement extends Components.SearchWorld, HTMLStencilElement {
+    }
+    var HTMLSearchWorldElement: {
+        prototype: HTMLSearchWorldElement;
+        new (): HTMLSearchWorldElement;
+    };
     interface HTMLStencilFormUserElement extends Components.StencilFormUser, HTMLStencilElement {
     }
     var HTMLStencilFormUserElement: {
@@ -67,6 +76,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "my-card": HTMLMyCardElement;
         "my-component": HTMLMyComponentElement;
+        "search-world": HTMLSearchWorldElement;
         "stencil-form-user": HTMLStencilFormUserElement;
         "stencil-table": HTMLStencilTableElement;
     }
@@ -89,6 +99,9 @@ declare namespace LocalJSX {
          */
         "middle"?: string;
     }
+    interface SearchWorld {
+        "searchText"?: string;
+    }
     interface StencilFormUser {
         "isEdit"?: boolean;
         "item"?: {};
@@ -101,6 +114,7 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "my-card": MyCard;
         "my-component": MyComponent;
+        "search-world": SearchWorld;
         "stencil-form-user": StencilFormUser;
         "stencil-table": StencilTable;
     }
@@ -111,6 +125,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "my-card": LocalJSX.MyCard & JSXBase.HTMLAttributes<HTMLMyCardElement>;
             "my-component": LocalJSX.MyComponent & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "search-world": LocalJSX.SearchWorld & JSXBase.HTMLAttributes<HTMLSearchWorldElement>;
             "stencil-form-user": LocalJSX.StencilFormUser & JSXBase.HTMLAttributes<HTMLStencilFormUserElement>;
             "stencil-table": LocalJSX.StencilTable & JSXBase.HTMLAttributes<HTMLStencilTableElement>;
         }

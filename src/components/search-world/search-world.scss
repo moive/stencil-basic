@@ -1,0 +1,45 @@
+.main-search-div {
+  font-family: "system-ui";
+  width: 300px;
+  margin: 50px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  display: inline-block;
+}
+.my-input-textbox{
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+#api-table {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  & td, & th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  & tr:nth-child(even){background-color: #f2f2f2;}
+
+  & tr:hover {background-color: #ddd;}
+
+  & tr {
+    cursor: pointer;
+  }
+}
+
+
+
+#api-table th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
