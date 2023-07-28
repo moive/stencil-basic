@@ -87,10 +87,10 @@ export class MyCard {
     const dateNow = new Date();
     const year = dateNow.getUTCFullYear();
     let month: string | number = dateNow.getUTCMonth() + 1;
-    let day: string | number = dateNow.getUTCDate();
-    const hours = dateNow.getHours();
-    const minutes = dateNow.getMinutes();
-    const second = dateNow.getSeconds();
+    let day: string | number = dateNow.getUTCDate() - 1;
+    // const hours = dateNow.getHours();
+    // const minutes = dateNow.getMinutes();
+    // const second = dateNow.getSeconds();
 
     if (day < 10) {
       day = '0' + day;
@@ -100,7 +100,8 @@ export class MyCard {
       month = `0${month}`;
     }
 
-    return `${year}-${month}-${day} ${hours}:${minutes}:${second}`;
+    return `${year}-${month}-${day}`;
+    // return `${year}-${month}-${day} ${hours}:${minutes}:${second}`;
   }
 
   getStencilUserFromAPI() {
@@ -109,7 +110,7 @@ export class MyCard {
       .then(res => res.json())
       .then(data => {
         const timeSeries = data['Time Series (5min)'];
-        const timeDateStencil = timeSeries['2023-07-25 17:00:00'];
+        const timeDateStencil = timeSeries[this.getDateNow() + ' 19:55:00'];
         this.myStencilUsers = timeDateStencil['5. volume'];
       })
       .catch(ex => console.log(ex));
@@ -120,9 +121,8 @@ export class MyCard {
     fetch(this.urlApi)
       .then(res => res.json())
       .then(data => {
-        console.log(this.getDateNow());
         const timeSeries = data['Time Series (5min)'];
-        const timeDateReact = timeSeries['2023-07-25 17:00:00'];
+        const timeDateReact = timeSeries[this.getDateNow() + ' 19:55:00'];
         console.log(timeSeries);
         this.myReactUsers = timeDateReact['5. volume'];
       })
