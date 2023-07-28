@@ -1,4 +1,4 @@
-import { Component, Prop, h, State } from '@stencil/core';
+import { Component, Prop, h, State, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'search-world',
@@ -11,6 +11,8 @@ export class SearchWold {
   @State() userInput: string;
 
   @State() urlApi: string = '';
+
+  @Event({ bubbles: true, composed: true }) searchWorldNameSelected: EventEmitter<string>;
 
   onUserInput(event: Event) {
     this.userInput = (event.target as HTMLInputElement).value;
@@ -34,6 +36,10 @@ export class SearchWold {
       });
   }
 
+  onRowClick(name: string) {
+    this.searchWorldNameSelected.emit(name);
+  }
+
   render() {
     return (
       <div class="main-search-div">
@@ -44,7 +50,7 @@ export class SearchWold {
         <hr />
         <table id="api-table">
           {this.searchResult.map(r => (
-            <tr>
+            <tr onClick={this.onRowClick.bind(this, r.name)}>
               <td>{r.name}</td>
               <td>{r.markeOpen}</td>
             </tr>

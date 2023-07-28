@@ -1,4 +1,4 @@
-import { Component, h, Prop, State, Watch } from '@stencil/core';
+import { Component, h, Prop, State, Watch, Listen } from '@stencil/core';
 
 @Component({
   tag: 'my-card',
@@ -154,6 +154,12 @@ export class MyCard {
     this.userName = (event.target as HTMLInputElement).value;
   }
 
+  @Listen('searchWorldNameSelected', { target: 'body' })
+  onSearchWorldNameSelected(event: CustomEvent<string>) {
+    // alert('called this method');
+    this.userName = event.detail;
+  }
+
   render() {
     let reactContent = (
       <div>
@@ -202,6 +208,7 @@ export class MyCard {
         <h></h>
         <h3>Two way data binding in stencil</h3>
         <input type="text" class="my-input-textbox" onInput={this.onUserInput.bind(this)} value={this.userName} />
+        <search-world search-text="bmw"></search-world>
       </div>
     );
     return mainContent;

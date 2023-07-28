@@ -34,6 +34,10 @@ export namespace Components {
         "items": any[];
     }
 }
+export interface SearchWorldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLSearchWorldElement;
+}
 export interface StencilFormUserCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLStencilFormUserElement;
@@ -100,6 +104,7 @@ declare namespace LocalJSX {
         "middle"?: string;
     }
     interface SearchWorld {
+        "onSearchWorldNameSelected"?: (event: SearchWorldCustomEvent<string>) => void;
         "searchText"?: string;
     }
     interface StencilFormUser {
